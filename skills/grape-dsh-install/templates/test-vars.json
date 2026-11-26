@@ -1,0 +1,55 @@
+{
+  "test_cases": [
+    {
+      "id": "TC-01",
+      "name": "Node.js version",
+      "command": "node --version",
+      "expected": "v18 or newer",
+      "mutating": false
+    },
+    {
+      "id": "TC-02",
+      "name": "Python version",
+      "command": "python3 --version",
+      "command_variants": ["python3 --version", "py -3 --version", "python --version"],
+      "expected": "3.10 or newer",
+      "mutating": false
+    },
+    {
+      "id": "TC-03",
+      "name": "grape CLI version",
+      "command": "grape --version",
+      "expected": "0.3.3 or newer",
+      "mutating": false
+    },
+    {
+      "id": "TC-04",
+      "name": "dsh version",
+      "command": "dsh --version",
+      "expected": "0.2.0 or newer",
+      "mutating": false
+    },
+    {
+      "id": "TC-05",
+      "name": "User auth profile",
+      "command": "env GRAPE_CLI_MODE=USER grape auth profile --json-out",
+      "expected": "exit 0 with a JSON object",
+      "requires_env": ["GRAPE_API_TOKEN"],
+      "mutating": false
+    },
+    {
+      "id": "TC-06",
+      "name": "Plugin list in target profile",
+      "command": "dsh plugin --profile grape list",
+      "expected": "contains @grape-dev/grape-dsh after install",
+      "mutating": true
+    },
+    {
+      "id": "TC-07",
+      "name": "Install from npm into the target profile",
+      "command": "dsh plugin --profile grape add @grape-dev/grape-dsh",
+      "expected": "exit 0; package listed",
+      "mutating": true
+    }
+  ]
+}

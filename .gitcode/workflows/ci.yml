@@ -1,0 +1,48 @@
+name: ci
+
+# Issue #43 R7：仓库此前没有 CI（.github/workflows 404），回归只能靠人工跑 npm test。
+# 本工作流在推送到基线分支与 PR 变更时执行 typecheck + build + test，供合并门禁使用。
+# 仓库级门禁（only_allow_merge_if_pipeline_succeeds / 必填评审人）需维护者在项目设置中开启。
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+      - 'dev-*'
+  pull_request:
+    types:
+      - open
+      - reopen
+      - update
+    branches:
+      - main
+      - dev
+      - 'dev-*'
+
+permissions: read-all
+
+concurrency:
+  enable: true
+  max: 2
+  exceed-action: QUEUE
+
+jobs:
+  verify:
+    name: typecheck / build / test
+    runs-on: [ubuntu-latest, x64, small]
+    steps:
+      - name: Checkout source code
+        uses: checkout
+      - name: Setup Node.js
+        uses: setup-node
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Typecheck
+        run: npm run typecheck
+      - name: Build
+        run: npm run build
+      - name: Test
+        run: npm test

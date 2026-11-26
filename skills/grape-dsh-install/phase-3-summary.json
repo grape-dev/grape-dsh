@@ -1,0 +1,49 @@
+{
+  "phase": 3,
+  "name": "Document Generation",
+  "status": "completed",
+  "skill_name": "grape-dsh-install",
+  "directory": "skills/grape-dsh-install/",
+  "files": [
+    "SKILL.md",
+    "references/dsh-plugin-commands.md",
+    "references/verification-method.md",
+    "references/acceptance-criteria.md",
+    "references/troubleshooting.md",
+    "references/cloud-credential-gate.md",
+    "scripts/preflight.sh",
+    "scripts/install.sh",
+    "scripts/verify.sh",
+    "scripts/test-cli-commands.sh",
+    "scripts/preflight.ps1",
+    "scripts/install.ps1",
+    "scripts/verify.ps1",
+    "templates/test-vars.json",
+    "phase-1-summary.json",
+    "phase-2-summary.json",
+    "phase-3-summary.json",
+    "phase-4-summary.json",
+    "phase-5-summary.json",
+    "phase-6-summary.json"
+  ],
+  "frontmatter": {
+    "name": "grape-dsh-install",
+    "description_has_summary": true,
+    "description_has_triggers": true,
+    "tags_count": 4,
+    "version_field_present": false
+  },
+  "structure_checks": {
+    "skill_md_present": true,
+    "references_dir_present": true,
+    "scripts_dir_present": true,
+    "templates_dir_present": true,
+    "extension_allowlist": "all files use .md / .json / .sh / .ps1",
+    "file_count": 20,
+    "file_count_limit": 30
+  },
+  "notes": [
+    "SKILL.md written in English (creator default); triggers include both English and Chinese phrases",
+    "phase summaries are retained intentionally because Issue #24 lists them as a deliverable, overriding the creator's post-run cleanup step"
+  ]
+}

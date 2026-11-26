@@ -1,0 +1,46 @@
+{
+  "phase": 6,
+  "name": "Cleanup and Compliance Check",
+  "status": "completed",
+  "resource_cleanup": {
+    "cloud_resources_created": 0,
+    "note": "No Huawei Cloud resource is created by this skill; nothing to release"
+  },
+  "huawei_cloud_spec_checks": [
+    {"item": "SKILL.md exists", "level": "critical", "result": "pass"},
+    {"item": "skill directory under skills/", "level": "low", "result": "pass (skills/grape-dsh-install/)"},
+    {"item": "directory name matches frontmatter name", "level": "high", "result": "pass (grape-dsh-install)"},
+    {"item": "YAML frontmatter exists", "level": "critical", "result": "pass"},
+    {"item": "name field exists", "level": "critical", "result": "pass"},
+    {"item": "description field with summary + triggers", "level": "critical", "result": "pass (English + Chinese triggers, 694 chars)"},
+    {"item": "no version field", "level": "low", "result": "pass"},
+    {"item": "Overview section", "level": "high", "result": "pass"},
+    {"item": "Prerequisites section", "level": "high", "result": "pass"},
+    {"item": "Workflow section", "level": "high", "result": "pass"},
+    {"item": "Core Commands section", "level": "high", "result": "pass"},
+    {"item": "Parameter Confirmation section", "level": "high", "result": "pass"},
+    {"item": "Reference Documents section", "level": "critical", "result": "pass"},
+    {"item": "references/ kebab-case names", "level": "low", "result": "pass"},
+    {"item": "credential hardcoding", "level": "critical", "result": "pass (no literal keys; scripts only report set/length)"},
+    {"item": "cross-skill direct calls", "level": "critical", "result": "pass (no other skill names invoked)"},
+    {"item": "total files <= 30", "level": "medium", "result": "pass (20)"},
+    {"item": "total size <= 40 MB", "level": "medium", "result": "pass (~40 KB)"},
+    {"item": "SKILL.md <= 500 lines", "level": "medium", "result": "pass (175 lines)"},
+    {"item": "file extensions in allowlist", "level": "medium", "result": "pass (.md/.json/.sh/.ps1)"}
+  ],
+  "huawei_credentials_gate": {
+    "applicable": false,
+    "reason": "Skill installs a local dsh plugin only; no hcloud/SDK/API call and no cloud resource operation",
+    "documented_in": ["SKILL.md#huawei-cloud-credential-gate--not-applicable", "references/cloud-credential-gate.md"]
+  },
+  "completeness_check": {
+    "phase_1": "present",
+    "phase_2": "present",
+    "phase_3": "present",
+    "phase_4": "present",
+    "phase_5": "present",
+    "phase_6": "present"
+  },
+  "cleanup_deviation": "phase-1..6 summaries are intentionally kept: Issue #24 lists phase-N-summary.json as a required deliverable, which overrides the creator's default deletion step",
+  "final_status": "compliant — delivered with PR and QA handoff"
+}

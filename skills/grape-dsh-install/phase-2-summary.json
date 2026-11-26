@@ -1,0 +1,38 @@
+{
+  "phase": 2,
+  "name": "Technical Research",
+  "status": "completed",
+  "execution_mode": "CLI",
+  "skipped_modes": {
+    "sdk": "No Huawei Cloud SDK is involved",
+    "api": "No Huawei Cloud REST endpoint is involved"
+  },
+  "evidence": [
+    {
+      "feature": "dsh plugin install",
+      "command": "dsh plugin --help",
+      "observed": "manage a profile's plugins by forwarding arguments to pnpm; --profile <name>; add/remove/why forwarded verbatim",
+      "version": "dsh 0.2.2-rc.3"
+    },
+    {
+      "feature": "bundle mount check",
+      "command": "dsh --profile <profile> --dump-config",
+      "observed": "documented in AGENT-DEPLOYMENT-GUIDE.md section 4; asserts grape-tools",
+      "version": "dsh 0.2.2-rc.3"
+    },
+    {
+      "feature": "user auth profile",
+      "command": "GRAPE_CLI_MODE=USER grape auth profile --help",
+      "observed": "GET /api/auth/profile; session token (tk_) is rejected with 403; user API key or JWT required",
+      "version": "grape 0.3.4"
+    },
+    {
+      "feature": "toolchain versions",
+      "command": "node --version / python3 --version / grape --version / dsh --version",
+      "observed": "node v26.13.1; python 3.12.10; grape 0.3.4; dsh 0.2.2-rc.3 on the development host",
+      "version": "dev host"
+    }
+  ],
+  "credential_gate": "Huawei Cloud AK/SK gate not applicable — skill operates no cloud resources and calls no hcloud command",
+  "conclusion": "Install and verification commands exist in the shipped CLI; no API path inference is used"
+}

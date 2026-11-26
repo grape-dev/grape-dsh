@@ -1,0 +1,18 @@
+{
+  "phase": 1,
+  "name": "Requirements Analysis",
+  "source": "Issue #24 (comment 202076012) — no interactive Q&A needed; requirements were pre-confirmed",
+  "status": "completed",
+  "inputs": {
+    "goal": "Let any agent (dsh / Claude Code / Codex / opencode) install @grape-dev/grape-dsh from the repository without human explanation",
+    "profile_default": "grape",
+    "plugin_spec_default": "@grape-dev/grape-dsh",
+    "targets": ["README.md", "docs/README.zh.md", "skills/grape-dsh-install/"]
+  },
+  "decisions": [
+    "Skill is repository-local (not published to a skills registry yet)",
+    "Bilingual README prompt with identical semantics",
+    "Idempotent install + explicit gates instead of interactive prompts",
+    "Fail-stop reporting: command text, exit code, first 20 lines"
+  ]
+}

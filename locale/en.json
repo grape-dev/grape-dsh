@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Grape DevOps Pipeline Tools",
+    "description": "Trigger, monitor, and manage Grape multi-agent DevOps pipelines via grape CLI. Registers 33 tools covering pipeline triggers, issue lifecycle, scenes, repos, skills, knowledge, dashboards, and project templates — with structured UI rendering and a strict boundary of only triggering, observing, and advancing, never interfering with node-to-node handoff."
+  }
+}

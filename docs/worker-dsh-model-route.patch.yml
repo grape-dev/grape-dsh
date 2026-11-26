@@ -1,0 +1,35 @@
+# 最小模型路由叠加层：让 headless profile 用上 relay 中转站
+#
+# 背景（2026-10-23 实测）：`dsh --profile headless` 自身**没有任何模型配置**，
+# 于是落到默认的 `deepseek-official` 官方路由；而 /etc/grape-dsh/grape.env 里的
+# DEEPSEEK_API_KEY 是**中转站**的 key → 拿它打官方接口 = "Authentication Fails"。
+#
+# 本文件只做一件事：把 grape profile 里的 relay provider + 默认模型叠加上来。
+# 不搬 grape patch 的其余部分（那些是 web UI / 设置页插件，headless 不需要）。
+#
+# 用法：
+#   set -a && . /etc/grape-dsh/grape.env && set +a
+#   dsh --profile headless --patch /tmp/relay-model.patch.yml --json "..."
+
+- id: llm-pi-ai
+  config:
+    providers:
+      relay:
+        displayName: Relay Station
+        # env 变量名；值由 /etc/grape-dsh/grape.env（600）提供
+        apiKeyEnv: DEEPSEEK_API_KEY
+        api: openai-completions
+        baseURL: https://opengw.clouddeveloper.club/v1
+        compat:
+          supportsDeveloperRole: false
+          maxTokensField: max_tokens
+        models:
+          - id: deepseek-v4.1-flash
+            name: DeepSeek V4.1 Flash
+            contextWindow: 1048576
+            maxTokens: 65536
+
+- id: agent-default-model
+  config:
+    provider: relay
+    model: deepseek-v4.1-flash

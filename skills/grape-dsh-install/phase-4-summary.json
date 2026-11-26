@@ -1,0 +1,21 @@
+{
+  "phase": 4,
+  "name": "Test Preparation",
+  "status": "completed",
+  "test_cases_file": "templates/test-vars.json",
+  "cases": [
+    {"id": "TC-01", "name": "Node.js version", "command": "node --version", "expected": ">= 18"},
+    {"id": "TC-02", "name": "Python version", "command": "python3 --version", "expected": ">= 3.10"},
+    {"id": "TC-03", "name": "grape CLI version", "command": "grape --version", "expected": ">= 0.3.3"},
+    {"id": "TC-04", "name": "dsh version", "command": "dsh --version", "expected": ">= 0.2.0"},
+    {"id": "TC-05", "name": "User auth profile", "command": "env GRAPE_CLI_MODE=USER grape auth profile --json-out", "requires_env": ["GRAPE_API_TOKEN"]},
+    {"id": "TC-06", "name": "Plugin list in target profile", "command": "dsh plugin --profile grape list", "expected": "contains @grape-dev/grape-dsh after install"},
+    {"id": "TC-07", "name": "Install from npm", "command": "dsh plugin --profile grape add @grape-dev/grape-dsh", "mutating": true}
+  ],
+  "execution_policy": {
+    "read_only_default": true,
+    "mutating_requires_flag": "--include-mutating",
+    "whitelist": ["node", "python3", "py", "grape", "dsh", "echo", "cat", "env"],
+    "secrets": "cases requiring GRAPE_API_TOKEN are skipped when it is absent; token values are never printed"
+  }
+}

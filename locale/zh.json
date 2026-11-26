@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Grape DevOps 流水线工具",
+    "description": "通过 grape CLI 触发、监控和管理 Grape 多 agent DevOps 流水线。注册 33 个工具，覆盖流水线触发、Issue 生命周期、场景管理、仓库操作、技能查询、知识库、仪表盘和项目模板——含结构化 UI 渲染，严格遵循「只触发、只观察、可推进、不干预节点间交接」的边界。"
+  }
+}

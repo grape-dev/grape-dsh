@@ -1,0 +1,17 @@
+# @grape-dev/grape-dsh bundle patch — applied when this plugin is installed.
+# Registers 33 Grape DevOps pipeline tools on ctx.tools.
+#
+# Transport: grape CLI subprocess (not HTTP fetch)
+# Requires: grape CLI installed (pip install grape) + Python >= 3.10
+#
+# Environment variables (resolved at runtime, not stored here):
+#   GRAPE_BASE_URL   — Grape server URL (e.g., http://localhost:8000)
+#   GRAPE_API_TOKEN  — Grape user-level API Key (grape_..., created in Grape Web Settings)
+#   GRAPE_TIMEOUT    — optional request timeout in seconds (default 30)
+#   GRAPE_CLI_BIN    — optional path to grape binary (default: grape from PATH)
+#
+# Optional: override baseUrl/token/timeout/bin directly here instead of env vars.
+
+- insert:
+    - id: grape-tools
+      name: '@grape-dev/grape-dsh'

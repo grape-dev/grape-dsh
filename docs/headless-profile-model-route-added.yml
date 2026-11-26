@@ -1,0 +1,61 @@
+# Your patch layer for this dsh profile, applied after every bundle layer:
+# a top-level YAML array of loader patch entries (id-targeted config
+# overrides, disables, and insert lists; `!!js` expressions allowed).
+#
+# ── 2026-10-26 新增：让 headless 形态也能用模型 ─────────────────────────
+# 动机（设计 D2「worker 机器自配」）：worker 引擎跑的是 `dsh headless --json`，
+# 而 headless profile 原本一份模型配置都没有 → 落到 dsh 默认的 deepseek-official
+# 官方路由 → 缺 key 报 MISSING_CREDENTIAL（本机 Run A 已实测复现）。
+# 本段把 grape profile 里已验证可用的 relay 中转站配置逐字复制过来。
+#
+# 还原方法：把本文件恢复为仅首部注释 + 一行 `[]`（备份见
+# /tmp/headless-patch-backup-20261026-152500.yml）。
+# 注意：模型 key 不在此文件里（此处只声明 apiKeyEnv 变量名），
+# 值仍由本机环境变量提供，平台不持有。
+- id: llm-pi-ai
+  config:
+    providers:
+      relay:
+        displayName: Relay Station
+        apiKeyEnv: DEEPSEEK_API_KEY
+        api: openai-completions
+        baseURL: https://opengw.clouddeveloper.club/v1
+        compat:
+          supportsDeveloperRole: false
+          maxTokensField: max_tokens
+        models:
+          # contextWindow 取中转站 /v1/models 自报的 context_window(1048576)。
+          # 原来写 64000 远小于真实窗口，会让正常的长回答被 dsh 判定为
+          # "stop usage above contextWindow"/输出超限，是截断提示的来源之一。
+          # maxTokens = 每步输出上限(经 maxTokensField: max_tokens 发出)。
+          # 不写则落到 dsh-llm-pi-ai 默认 32768；中转站上限为 393216。
+          - id: deepseek-v4.1-flash
+            name: DeepSeek V4.1 Flash
+            contextWindow: 1048576
+            maxTokens: 65536
+          - id: deepseek-v4-flash-0731
+            name: DeepSeek V4 Flash 0731
+            contextWindow: 1048576
+            maxTokens: 65536
+          - id: deepseek-v4-pro-0813
+            name: DeepSeek V4 Pro
+            contextWindow: 1048576
+            maxTokens: 65536
+          - id: glm-5.2
+            name: GLM 5.2
+            contextWindow: 1048576
+            maxTokens: 65536
+          - id: glm-5.3
+            name: GLM 5.3
+            contextWindow: 1048576
+            maxTokens: 65536
+          - id: glm-5.3-flash
+            name: GLM 5.3 Flash
+            contextWindow: 1048576
+            maxTokens: 65536
+
+# 默认模型指向 relay provider
+- id: agent-default-model
+  config:
+    provider: relay
+    model: deepseek-v4.1-flash
